@@ -91,13 +91,32 @@ ruta.get("/borrarUsuario/:id", async (req, res) => {
         var archivo = usuario.foto;
         await borrarUsuario(req.params.id);
         eliminarArchivo(archivo)(req, res, () => {
-          res.redirect("/");
+          res.redirect("/usuarioadmin");
         });
       }
     } catch (err) {
       console.log("Error al borrar usuario" + err);
       res.status(200).send("Error al borrar usuario.");
     }
+});
+
+
+ruta.get("/borrarUsuario1/:id", async (req, res) => {
+  try {
+    var usuario = await buscarporID(req.params.id);
+    if (!usuario) {
+      res.status(400).send("Usuario no encontrado.");
+    } else {
+      var archivo = usuario.foto;
+      await borrarUsuario(req.params.id);
+      eliminarArchivo(archivo)(req, res, () => {
+        res.redirect("/usuario1");
+      });
+    }
+  } catch (err) {
+    console.log("Error al borrar usuario" + err);
+    res.status(200).send("Error al borrar usuario.");
+  }
 });
 
 ruta.get("/login", (req, res) => {
@@ -108,9 +127,9 @@ ruta.post("/login", async(req, res) => {
   var user=await mostrarUsuarios();
   var datos=req.body;
 var ValidU=await validar(datos,user);
-
-
-
+if (user==undefined){
+  res.redirect("/login");
+}else{
       if (ValidU.admin){
           req.session.admin=req.body.usuario;
           res.render("producto/producto");
@@ -121,7 +140,7 @@ var ValidU=await validar(datos,user);
           res.redirect("/noticias2");
           res.end;
       }
-  
+  }
 });
 
 ruta.get("/logout",(req,res)=>{
