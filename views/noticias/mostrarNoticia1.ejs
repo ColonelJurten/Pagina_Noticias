@@ -1,0 +1,33 @@
+<%- include ("../templates/encabezado") %>
+<%- include ("../templates/menuNolog") %>
+
+<div class="container">
+    <div class="card">
+    <table class="table">
+        <thead>
+            <div class="card-header">
+    <h2><center>Noticias</center></h2>
+</div>
+</thead>
+<tbody>
+    <div class="card-header">
+    <% noticias.forEach((noticia) => { %>
+        <tr>
+       <h3><%= noticia.titulo %></h3> 
+    <a href="#<%=noticia.id%>" class="btn btn-primary" data-bs-toggle="collapse">Abrir Noticia</a>
+    <div id="<%=noticia.id%>" class="collapse">
+       <p> <%= noticia.historia %></p>
+        <p><img src="/imagesNoticia/<%=noticia.foto%> " alt="" width='250px'></p>
+    </div>
+    
+</tr>
+    <% }); %> 
+</div>
+</tbody>
+</table>
+<div class="card-footer"></div>
+</div>
+  </div>
+      
+
+<%- include ("../templates/pie") %>
