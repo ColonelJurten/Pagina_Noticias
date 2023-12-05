@@ -1,4 +1,4 @@
-var {conexion, conexionProductos, conexionUsuarios} = require("./conexion")
+var {conexionUsuarios} = require("./conexion")
 //var { conexionProductos, conexionUsuarios} = require("./conexion")
 var Usuario=require("../modelos/Usuario");
 const { generarPassword, validarPassword } = require("../middlewares/password");
@@ -8,10 +8,11 @@ async function mostrarUsuarios(){
     try{
         var usuarios=await conexionUsuarios.get();
         usuarios.forEach((usuario)=>{
-            //console.log(usuario.data());
-            var usuario1=new Usuario(usuario.id, usuario.data());
-            if(usuario1.bandera==0){
-                users.push(usuario1.obtenerUsuario);       
+            
+            var user=new Usuario(usuario.id, usuario.data());
+            console.log(usuario.data());
+            if(user.bandera==0){
+                users.push(user.obtenerUsuario);       
             }
         });
     }
@@ -108,7 +109,7 @@ async function borrarUsuario(id){
 }
 
 
-async function login(datos){
+/*async function login(datos){
     var user=undefined;
     var usuarioObjeto;
     try{
@@ -131,7 +132,21 @@ async function login(datos){
         console.log("Error al obtener usuario"+err);
     }
     return user;
+}*/
+async function validar (datos,users){
+    var Cpass;
+    var valUser;
+    users.forEach((user)=>{
+       if(datos.usuario == user.usuario){
+         // console.log("Bienvenido "+user.nombre);
+          Cpass = validarPassword(datos.password,user.password,user.salt);
+          if(Cpass) {valUser = user;}else{
+             valUser = undefined;}
+       }
+    });
+    return valUser;
 }
+
 
 module.exports={
     mostrarUsuarios,
@@ -139,5 +154,5 @@ module.exports={
     nuevoUsuario,
     modificarUsuario,
     borrarUsuario,
-    login
+    validar
 }

@@ -2,15 +2,16 @@ var ruta=require("express").Router();
 const conexion = require("../bd/conexion");
 var subirArchivos=require("../middlewares/middlewares").subirArchivos;
 var eliminarArchivo=require("../middlewares/middlewares").eliminarArchivo;
-var {autorizado}=require("../middlewares/password");
+var {autorizado,admin}=require("../middlewares/password");
 //var {admin} = require("../middlewares/password");
 //var autorizado=require("../middlewares/password").autorizado;
 //var login = require ("../middlewares/autentificar").login;
-var {mostrarUsuarios, nuevoUsuario, buscarporID, modificarUsuario, borrarUsuario, login}=require("../bd/usuariosBD");
+var {mostrarProducto}=require("../bd/productoBD")
+var {mostrarUsuarios, nuevoUsuario, buscarporID, modificarUsuario, borrarUsuario, validar}=require("../bd/usuariosBD");
 //const { autorizado } = require("../middlewares/password").autorizado;
 const Usuario = require("../modelos/Usuario");
 
-ruta.get("/",autorizado,async(req, res)=>{
+ruta.get("/usuarioadmin",autorizado,async(req, res)=>{
     var usuarios = await mostrarUsuarios()
     //console.log(usuarios);
     res.render("usuarios/mostrar",{usuarios});
@@ -54,7 +55,7 @@ ruta.post("/editarUsuario", subirArchivos(),async(req, res)=>{
       req.body.foto = req.body.fotoAnterior;
     }
     var error=await modificarUsuario(req.body);
-    res.redirect("/");
+    res.redirect("/usuarioadmin");
 
 });
 ruta.get("/editarUsuario1/:id",async(req, res)=>{
@@ -104,21 +105,23 @@ ruta.get("/login", (req, res) => {
 });
 
 ruta.post("/login", async(req, res) => {
-  var user=await login(req.body);
-  if (user == undefined) {  
-      res.redirect("/login");
-  } else {
-      if (user.admin){
-          console.log("Administrador");
+  var user=await mostrarUsuarios();
+  var datos=req.body;
+var ValidU=await validar(datos,user);
+
+
+
+      if (ValidU.admin){
           req.session.admin=req.body.usuario;
-          res.redirect("/nuevoproducto");
+          res.render("producto/producto");
       }
       else{
-          console.log("usuario");
+          //console.log("usuario");
           req.session.usuario=req.body.usuario;
           res.redirect("/noticias2");
+          res.end;
       }
-  }
+  
 });
 
 ruta.get("/logout",(req,res)=>{

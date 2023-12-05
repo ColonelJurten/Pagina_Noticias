@@ -15,7 +15,7 @@ async function mostrarProducto() {
     } catch (err) {
         console.log("Error al obtener los productos de Firebase" + err);
         prods.push(null);
-    }2
+    }
     return prods;
 }
 
