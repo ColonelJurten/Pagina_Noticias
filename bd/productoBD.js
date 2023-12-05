@@ -1,6 +1,6 @@
 //var { conexion,conexionUsuarios, conexionProductos } = require("./conexion");
 var { conexionProductos } = require("./conexion");
-var Producto = require("../modelos/producto");
+var Producto = require("../modelos/Producto");
 
 async function mostrarProducto() {
     var prods = [];
