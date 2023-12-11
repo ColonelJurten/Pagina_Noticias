@@ -6,9 +6,13 @@ admin.initializeApp({
 });
 
 var db=admin.firestore();
+db.settings({ignoreUndefinedProperties:true});
 var conexionUsuarios=db.collection("Keys1");
 var conexionProductos = db.collection("productos");
 var conexionNoticias=db.collection("noticias");
+
+
+
 
 module.exports = {
     conexionUsuarios,

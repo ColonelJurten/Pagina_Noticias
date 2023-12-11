@@ -53,9 +53,6 @@ async function nuevoProducto(datos) {
 
 async function modificarProducto(datos){
    // var producto=await buscarProductoPorID(datos.id);
-   var producto=new Producto(datos.id, datos);
-    var error =1;
-    if(producto!=undefined){
         var producto=new Producto(datos.id, datos);
         if(producto.bandera==0){
             try{
@@ -66,10 +63,6 @@ async function modificarProducto(datos){
             catch(err){
                 console.log("Error al modificar el producto"+err);
             }
-        }
-        else{
-            console.log("Los datos no son correctos");
-        }
     }
     return error;
 }

@@ -33,16 +33,20 @@ ruta.post("/nuevoproducto",subirArchivos(), async (req, res) => {
 });
 
 ruta.get("/editarProducto/:id", async (req, res) => {
-    console.log(req.params.id);
+
     var producto = await buscarProductoPorID(req.params.id);
     res.render("producto/modificarProducto", { producto });
-    res.end();
+
 });
 
 ruta.post("/editarProducto",subirArchivos(), async (req, res) => {
-    console.log(req.body);
-    req.body.foto=req.file.originalname;
-    var error = await modificarProducto(req.body);
+  //console.log(req.params.id);
+  if(req.file!=null){
+    req.body.foto=req.file.filename;
+  }else{
+    req.body.foto=req.body.fotoAnterior
+  }
+await modificarProducto(req.body);
     res.redirect("/producto");
 });
 

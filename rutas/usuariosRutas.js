@@ -127,7 +127,7 @@ ruta.post("/login", async(req, res) => {
   var user=await mostrarUsuarios();
   var datos=req.body;
 var ValidU=await validar(datos,user);
-if (user==undefined){
+if (ValidU==undefined){
   res.redirect("/login");
 }else{
       if (ValidU.admin){
