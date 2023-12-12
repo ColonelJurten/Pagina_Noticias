@@ -51,6 +51,7 @@ async function nuevoProducto(datos) {
     return error;
 }
 
+
 async function modificarProducto(datos){
    // var producto=await buscarProductoPorID(datos.id);
         var producto=new Producto(datos.id, datos);
@@ -89,5 +90,6 @@ module.exports = {
     buscarProductoPorID,
     nuevoProducto,
     modificarProducto,
-    borrarProducto
+    borrarProducto,
+   
 };

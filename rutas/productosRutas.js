@@ -2,7 +2,7 @@ var ruta=require("express").Router();
 const conexion = require("../bd/conexion");
 var subirArchivos=require("../middlewares/middlewaresProducto").subirArchivos;
 var eliminarArchivoProd=require("../middlewares/middlewaresProducto").eliminarArchivoProd;
-var { mostrarProducto, nuevoProducto, buscarProductoPorID, modificarProducto, borrarProducto } = require("../bd/productoBD");
+var { mostrarProducto, nuevoProducto, buscarProductoPorID, modificarProducto, borrarProducto, Venta } = require("../bd/productoBD");
 const Producto = require("../modelos/Producto");
 var {autorizadoAdmin,autorizadoUsuario,admin}=require("../middlewares/password");
 
@@ -39,6 +39,7 @@ ruta.get("/editarProducto/:id", async (req, res) => {
     res.render("producto/modificarProducto", { producto });
 
 });
+
 
 ruta.post("/editarProducto",subirArchivos(), async (req, res) => {
   //console.log(req.params.id);

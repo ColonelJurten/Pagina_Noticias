@@ -15,6 +15,7 @@
                         <th>Descripción</th>
                         <th>Precio</th>
                         <th>Foto</th>
+                        <th>Comprar</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -27,7 +28,15 @@
                         <td><%= producto.descripcion %></td>
                         <td><%= producto.precio %></td>
                         <td><img src="/imagesProducto/<%=producto.foto%> " alt="" width='100px'></td>
-                      
+                      <td>
+                        <button class="Compra" onclick="window.modal1.showModal();">Comprar</button>
+
+                        <dialog id="modal1">
+                           <h2>Gracias por su compra</h2>
+                           <p>Usted a adquirido el producto</p>
+                           <button onclick="window.modal1.close();">Cerrar</button>
+                        </dialog>
+                    </td>
                     </tr>
                     <%
                     });
@@ -38,5 +47,5 @@
         <div class="card-footer"></div>
     </div>
 </div>
-
+<script src="/modelos/Compras.js"></script>
 <%- include ("../templates/pie") %>

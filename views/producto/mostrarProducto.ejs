@@ -15,6 +15,7 @@
                         <th>Descripción</th>
                         <th>Precio</th>
                         <th>Foto</th>
+                        <th>Ventas</th>
                         <th>Editar / Borrar</th>
                     </tr>
                 </thead>
@@ -28,6 +29,7 @@
                         <td><%= producto.descripcion %></td>
                         <td><%= producto.precio %></td>
                         <td><img src="/imagesProducto/<%=producto.foto%> " alt="" width='100px'></td>
+                        <td><%= producto.Compras %></td>
                         <td>
                             <a href="/editarProducto/<%= producto.id %>">Editar</a>
                             <a href="/borrarProducto/<%= producto.id %>">Borrar</a>
