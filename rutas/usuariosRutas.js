@@ -2,21 +2,18 @@ var ruta=require("express").Router();
 const conexion = require("../bd/conexion");
 var subirArchivos=require("../middlewares/middlewares").subirArchivos;
 var eliminarArchivo=require("../middlewares/middlewares").eliminarArchivo;
-var {autorizado,admin}=require("../middlewares/password");
-//var {admin} = require("../middlewares/password");
-//var autorizado=require("../middlewares/password").autorizado;
-//var login = require ("../middlewares/autentificar").login;
+var {autorizadoAdmin,autorizadoUsuario,admin}=require("../middlewares/password");
 var {mostrarProducto}=require("../bd/productoBD")
 var {mostrarUsuarios, nuevoUsuario, buscarporID, modificarUsuario, borrarUsuario, validar}=require("../bd/usuariosBD");
 //const { autorizado } = require("../middlewares/password").autorizado;
 const Usuario = require("../modelos/Usuario");
 
-ruta.get("/usuarioadmin",autorizado,async(req, res)=>{
+ruta.get("/usuarioadmin",autorizadoAdmin,async(req, res)=>{
     var usuarios = await mostrarUsuarios()
     //console.log(usuarios);
     res.render("usuarios/mostrar",{usuarios});
 });
-ruta.get("/usuario1",autorizado,async(req, res)=>{
+ruta.get("/usuario1",autorizadoUsuario,async(req, res)=>{
   var usuarios = await mostrarUsuarios()
   //console.log(usuarios);
   res.render("usuarios/mostrar1",{usuarios});
@@ -83,22 +80,14 @@ ruta.post("/editarUsuario1", subirArchivos(),async(req, res)=>{
 });
 
 ruta.get("/borrarUsuario/:id", async (req, res) => {
-    try {
-      var usuario = await buscarporID(req.params.id);
-      if (!usuario) {
-        res.status(400).send("Usuario no encontrado.");
-      } else {
-        var archivo = usuario.foto;
-        await borrarUsuario(req.params.id);
-        eliminarArchivo(archivo)(req, res, () => {
-          res.redirect("/usuarioadmin");
-        });
-      }
-    } catch (err) {
-      console.log("Error al borrar usuario" + err);
-      res.status(200).send("Error al borrar usuario.");
-    }
+await borrarUsuario(req.params.id);
+res.redirect("usarioadmin")
 });
+
+ruta.get("/borrarUsuario1/:id", async (req, res) => {
+  await borrarUsuario(req.params.id);
+  res.redirect("usuarios/mostrar1")
+  });
 
 
 ruta.get("/borrarUsuario1/:id", async (req, res) => {

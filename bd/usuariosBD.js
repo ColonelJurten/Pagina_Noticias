@@ -1,6 +1,7 @@
 var {conexionUsuarios} = require("./conexion")
 //var { conexionProductos, conexionUsuarios} = require("./conexion")
 var Usuario=require("../modelos/Usuario");
+const fs=require("fs");
 const { generarPassword, validarPassword } = require("../middlewares/password");
 
 async function mostrarUsuarios(){
@@ -98,6 +99,7 @@ async function borrarUsuario(id){
     if(user!=undefined){
         try{
             await conexionUsuarios.doc(id).delete();
+            fs.unlinkSync("./web/"+user.foto)
             console.log("Usuario borrado");
             error=0;
         }

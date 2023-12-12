@@ -4,8 +4,9 @@ var subirArchivos=require("../middlewares/middlewaresProducto").subirArchivos;
 var eliminarArchivoProd=require("../middlewares/middlewaresProducto").eliminarArchivoProd;
 var { mostrarProducto, nuevoProducto, buscarProductoPorID, modificarProducto, borrarProducto } = require("../bd/productoBD");
 const Producto = require("../modelos/Producto");
+var {autorizadoAdmin,autorizadoUsuario,admin}=require("../middlewares/password");
 
-ruta.get("/producto",async(req, res)=>{
+ruta.get("/producto",autorizadoAdmin,async(req, res)=>{
     var productos = await mostrarProducto()
     console.log(productos);
     res.render("producto/mostrarProducto",{productos});
@@ -15,13 +16,13 @@ ruta.get("/producto1",async(req, res)=>{
     console.log(productos);
   res.render("producto/mostrarProducto1",{productos});
 });
-ruta.get("/producto2",async(req, res)=>{
+ruta.get("/producto2",autorizadoUsuario,async(req, res)=>{
   var productos = await mostrarProducto()
     console.log(productos);
   res.render("producto/mostrarProducto2",{productos});
 });
 
-ruta.get("/nuevoproducto",(req, res)=>{
+ruta.get("/nuevoproducto",autorizadoAdmin,(req, res)=>{
     res.render("producto/producto");
 });
 ruta.post("/nuevoproducto",subirArchivos(), async (req, res) => {

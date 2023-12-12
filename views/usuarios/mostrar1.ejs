@@ -18,23 +18,19 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <%
-                    usuarios.forEach((usuario)=>{
-                    %>
+                    <%usuarios.map(item=>{%>
                         <tr>
-                            <td><%=usuario.id%></td>
-                            <td><%=usuario.nombre%></td>
-                            <td><%=usuario.usuario%></td>
+                            <td><%=item.id%></td>
+                            <td><%=item.nombre%></td>
+                            <td><%=item.usuario%></td>
                             <td>********</td>
-                            <td><img src="/images/<%=usuario.foto%> " alt="" width='100px'></td>
+                            <td><img src="/images/<%=item.foto%> " alt="" width='100px'></td>
                             <td>
-                                <a href="/editarUsuario/<%=usuario.id%>">Editar</a>
-                                <a href="/borrarUsuario1/<%=usuario.id%>">Borrar</a>
+                                <a href="/editarUsuario1/<%=item.id%>">Editar</a>
+                                <a href="/borrarUsuario1/<%=item.id%>">Borrar</a>
                             </td>
                         </tr>
-                        <%
-                    });
-                    %>
+                        <%}); %>
                 </tbody>
             </table>
         <div class="card-footer"></div>

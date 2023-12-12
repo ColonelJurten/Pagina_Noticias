@@ -15,12 +15,22 @@ function validarPassword(password,hash,salt){
     return hashValidar===hash
 }
 
-function autorizado(req,res,siguiente){
-    console.log("usuario autorizado");
-    if(req.session.usuario || req.session.admin){
+function autorizadoAdmin(req,res,siguiente){
+    if(req.session.admin){
+        siguiente();
+        console.log("admin autorizado");
+    }else{
+        res.redirect("/login");
+        console.log("No admin")
+    }
+}
+function autorizadoUsuario(req,res,siguiente){
+    if(req.session.usuario){
+        console.log("usuario autorizado");
         siguiente();
     }else{
         res.redirect("/login");
+        console.log("No usuario")
     }
 }
 
@@ -37,9 +47,19 @@ function admin(req,res,siguiente){
     } 
 }
 
+/*route.get('/usuarioadmin','/producto','/nuevoproducto','/nuevaNoticia','/noticias',function(req,res,next){
+if (req.session.admin){
+    next()
+}else{
+    res.status(401);
+    console.log("No eres Admin")
+}
+});*/
+
 module.exports={
     generarPassword,
     validarPassword,
-    autorizado,
+    autorizadoAdmin,
+    autorizadoUsuario,
     admin
 }

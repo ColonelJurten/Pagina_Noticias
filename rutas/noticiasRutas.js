@@ -4,8 +4,9 @@ var subirArchivos=require("../middlewares/middlewaresNoticia").subirArchivos;
 var eliminarArchivoNot=require("../middlewares/middlewaresNoticia").eliminarArchivoNot;
 var { mostrarNoticia, nuevaNoticia, buscarNoticiaPorID, modificarNoticia, borrarNoticia} = require("../bd/noticiasBD");
 const Noticias = require("../modelos/Noticias");
+var {autorizadoAdmin,autorizadoUsuario,admin}=require("../middlewares/password");
 
-ruta.get("/noticias",async(req, res)=>{
+ruta.get("/noticias",autorizadoAdmin,async(req, res)=>{
     var noticias = await mostrarNoticia()
     console.log(noticias);
     res.render("noticias/mostrarNoticia",{noticias});
@@ -17,13 +18,13 @@ ruta.get("/noticias1",async(req, res)=>{
   res.render("noticias/mostrarNoticia1",{noticias});
 });
 
-ruta.get("/noticias2",async(req, res)=>{
+ruta.get("/noticias2",autorizadoUsuario,async(req, res)=>{
   var noticias = await mostrarNoticia()
   console.log(noticias);
   res.render("noticias/mostrarNoticia2",{noticias});
 });
 
-ruta.get("/nuevaNoticia",(req, res)=>{
+ruta.get("/nuevaNoticia",autorizadoAdmin,(req, res)=>{
     res.render("noticias/noticias");
 });
 ruta.post("/nuevaNoticia",subirArchivos(), async (req, res) => {
@@ -34,7 +35,7 @@ ruta.post("/nuevaNoticia",subirArchivos(), async (req, res) => {
     res.redirect("/noticias");
 });
 
-ruta.get("/nuevaNoticia1",(req, res)=>{
+ruta.get("/nuevaNoticia1",autorizadoUsuario,(req, res)=>{
   res.render("noticias/noticias1");
 });
 ruta.post("/nuevaNoticia1",subirArchivos(), async (req, res) => {

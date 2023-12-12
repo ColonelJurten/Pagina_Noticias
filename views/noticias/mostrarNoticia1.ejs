@@ -13,11 +13,12 @@
     <div class="card-header">
     <% noticias.forEach((noticia) => { %>
         <tr>
-       <center><h3><%= noticia.titulo %></h3> </center>
+       <center><h3><%= noticia.titulo %></h3> 
+       <p><img src="/imagesNoticia/<%=noticia.foto%> " alt="" width='100px'></p></center>    
     <a href="#<%=noticia.id%>" class="btn btn-primary" data-bs-toggle="collapse">Abrir Noticia</a>
     <div id="<%=noticia.id%>" class="collapse">
        <p> <%= noticia.historia %></p>
-        <p><img src="/imagesNoticia/<%=noticia.foto%> " alt="" width='250px'></p>
+        <p><img src="/imagesNoticia/<%=noticia.foto%> " alt="" width='500px'></p>
     </div>
     <br>
 </tr>

@@ -11,8 +11,18 @@ var subirArchivos=require("../middlewares/middlewaresNoticia").subirArchivos;
 var { mostrarNoticia, nuevaNoticia, buscarNoticiaPorID, modificarNoticia, borrarNoticia} = require("../bd/noticiasBD");
 const Noticias = require("../modelos/Noticias");
 
-ruta.get("/usuario",autorizado,async(req, res)=>{
+ruta.get("/usuarioBus",autorizado,async(req, res)=>{
     var usuarios = await mostrarUsuarios()
     //console.log(usuarios);
-    res.render("dropdowns/dropmenu",[usuarios]);
+    res.render("dropdowns/dropmenu",{usuarios});
+});  
+    ruta.get("/productoBus",async(req, res)=>{
+        var productos = await mostrarProducto()
+        console.log(productos);
+        res.render("dropdowns/dropmenu",{productos});
+    });
+ruta.get("/noticiasBus",async(req, res)=>{
+    var noticias = await mostrarNoticia()
+    console.log(noticias);
+    res.render("dropdowns/dropmenu",{noticias});
 });
